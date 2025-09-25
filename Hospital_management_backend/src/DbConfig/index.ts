@@ -1,13 +1,10 @@
 import { DataSource } from "typeorm";
 export const AppDataSource = new DataSource({
-    type: "postgres",
-    host: "localhost",
-    port: 5432,
-    username: "postgres",
-    password: "5520",
-    database: "HMS",
-    synchronize: true,
-    entities: ['src/Entities/**/*.ts'],
-    subscribers: ['src/subscriber/**/*.ts'],
-    migrations: ['src/migration/**/*.ts'],
-})
+  type: "postgres",
+  url: process.env.DATABASE_URL,   // 🔑 Neon se aaya hua URL
+  synchronize: true,
+  entities: ["dist/Entities/**/*.js"],  // deploy ke baad JS files
+  migrations: ["dist/migration/**/*.js"],
+  subscribers: ["dist/subscriber/**/*.js"],
+  ssl: { rejectUnauthorized: false } // Neon SSL require karta hai
+});
